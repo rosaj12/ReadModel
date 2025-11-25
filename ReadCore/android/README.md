@@ -61,6 +61,30 @@ android/
 - Android SDK API 34
 - Gradle 8.0+
 
+## 📚 Guias de Configuração e Compilação
+
+Escolha o guia adequado ao seu nível:
+
+| Guia | Descrição | Recomendado para |
+|------|-----------|------------------|
+| **[ANDROID-STUDIO.md](ANDROID-STUDIO.md)** ⭐ | Guia completo de configuração do Android Studio | Primeira vez usando Android Studio |
+| **[GUIA-VISUAL.md](GUIA-VISUAL.md)** | Versão simplificada com diagramas visuais | Quem prefere guias visuais |
+| **[EXECUTAR.md](EXECUTAR.md)** | Como compilar e executar (3 métodos) | Já tem Android Studio instalado |
+| **[COMO-COMPILAR.md](COMO-COMPILAR.md)** | Tutorial detalhado passo a passo | Troubleshooting e detalhes |
+| **[QUICKSTART.md](QUICKSTART.md)** | Referência rápida de comandos | Desenvolvedores experientes |
+| **[APK-INFO.md](APK-INFO.md)** | Informações sobre build e distribuição | Publicar o app |
+
+### 🎯 Início Rápido
+
+**Nunca usou Android Studio?**
+1. Leia: [ANDROID-STUDIO.md](ANDROID-STUDIO.md)
+2. Siga os 4 passos: Instalar → Abrir → Configurar → Executar
+
+**Já tem Android Studio?**
+1. File → Open → Selecione pasta `android/`
+2. Aguarde Gradle sync
+3. Run ▶️ (Shift+F10)
+
 ## 🔧 Como compilar
 
 1. Clone o repositório e navegue até o diretório android:
