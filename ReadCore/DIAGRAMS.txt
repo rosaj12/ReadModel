@@ -1,0 +1,237 @@
+════════════════════════════════════════════════════════════════════════
+                          READCORE - ARCHITECTURE
+                    Digital Book Reader with Clean Architecture
+════════════════════════════════════════════════════════════════════════
+
+┌──────────────────────────────────────────────────────────────────────┐
+│                         FRAMEWORK LAYER                              │
+│                    (UI, Infrastructure, Main)                        │
+│  ┌────────────────────────────────────────────────────────────────┐ │
+│  │  Main.java                                                      │ │
+│  │  - Dependency Injection                                         │ │
+│  │  - Application Bootstrap                                        │ │
+│  └────────────────────────────────────────────────────────────────┘ │
+│  ┌────────────────────────────────────────────────────────────────┐ │
+│  │  UI Components (Swing)                                          │ │
+│  │  ┌──────────────────┐          ┌──────────────────┐           │ │
+│  │  │  MainWindow      │          │  ReaderWindow    │           │ │
+│  │  │  - Book list     │          │  - Page display  │           │ │
+│  │  │  - Search        │          │  - Navigation    │           │ │
+│  │  │  - Add/Remove    │          │  - Bookmarks     │           │ │
+│  │  └──────────────────┘          └──────────────────┘           │ │
+│  └────────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────────┘
+                               ▼  depends on
+┌──────────────────────────────────────────────────────────────────────┐
+│                         ADAPTERS LAYER                               │
+│                  (Implementations, I/O, External)                    │
+│  ┌────────────────────────────────────────────────────────────────┐ │
+│  │  Persistence (JSON)                                             │ │
+│  │  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐  │ │
+│  │  │ JsonBookRepo   │  │ JsonProgress   │  │ JsonBookmark   │  │ │
+│  │  │                │  │ Repository     │  │ Repository     │  │ │
+│  │  └────────────────┘  └────────────────┘  └────────────────┘  │ │
+│  └────────────────────────────────────────────────────────────────┘ │
+│  ┌────────────────────────────────────────────────────────────────┐ │
+│  │  Format Readers                                                 │ │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────┐  │ │
+│  │  │ PdfReader│  │EpubReader│  │TxtReader │  │MultiFormat   │  │ │
+│  │  │          │  │          │  │          │  │BookReader    │  │ │
+│  │  └──────────┘  └──────────┘  └──────────┘  └──────────────┘  │ │
+│  └────────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────────┘
+                        ▼  implements interfaces
+┌──────────────────────────────────────────────────────────────────────┐
+│                        USE CASES LAYER                               │
+│                   (Application Business Rules)                       │
+│  ┌────────────────────────────────────────────────────────────────┐ │
+│  │  Library Management          │  Reading & Navigation            │ │
+│  │  ┌──────────────────┐        │  ┌──────────────────┐          │ │
+│  │  │ AddBookUseCase   │        │  │ OpenBookUseCase  │          │ │
+│  │  │ GetAllBooksUseCase│       │  │ ReadPageUseCase  │          │ │
+│  │  │ RemoveBookUseCase│        │  │ GetProgressUseCase│         │ │
+│  │  │ SearchBooksUseCase│       │  │ UpdateProgressUseCase│      │ │
+│  │  └──────────────────┘        │  └──────────────────┘          │ │
+│  │                               │                                 │ │
+│  │  Bookmarks                   │                                 │ │
+│  │  ┌──────────────────┐        │                                 │ │
+│  │  │CreateBookmarkUseCase│     │                                 │ │
+│  │  │GetBookmarksUseCase  │     │                                 │ │
+│  │  └──────────────────┘        │                                 │ │
+│  └────────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────────┘
+                           ▼  uses only
+┌──────────────────────────────────────────────────────────────────────┐
+│                         DOMAIN LAYER                                 │
+│                  (Enterprise Business Rules)                         │
+│  ┌────────────────────────────────────────────────────────────────┐ │
+│  │  Entities                                                        │ │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────┐  │ │
+│  │  │  Book    │  │ Bookmark │  │ Reading  │  │ BookContent  │  │ │
+│  │  │          │  │          │  │ Progress │  │              │  │ │
+│  │  └──────────┘  └──────────┘  └──────────┘  └──────────────┘  │ │
+│  │                                                                  │ │
+│  │  ┌──────────┐                                                   │ │
+│  │  │BookFormat│  (Enum: PDF, EPUB, TXT, MOBI)                   │ │
+│  │  └──────────┘                                                   │ │
+│  └────────────────────────────────────────────────────────────────┘ │
+│  ┌────────────────────────────────────────────────────────────────┐ │
+│  │  Repository Interfaces                                          │ │
+│  │  ┌──────────────────┐  ┌──────────────────┐                   │ │
+│  │  │ BookRepository   │  │BookReaderRepo    │                   │ │
+│  │  │ ProgressRepo     │  │BookmarkRepo      │                   │ │
+│  │  └──────────────────┘  └──────────────────┘                   │ │
+│  └────────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════
+                           DATA FLOW EXAMPLES
+════════════════════════════════════════════════════════════════════════
+
+ADD BOOK FLOW:
+─────────────────────────────────────────────────────────────────────────
+User Action → MainWindow.addBook()
+              ↓
+              AddBookUseCase.execute(filePath)
+              ↓
+              Book entity created
+              ↓
+              BookRepository.save(book)
+              ↓
+              JsonBookRepository saves to data/books.json
+              ↓
+              Book added to library ✓
+
+
+READ PAGE FLOW:
+─────────────────────────────────────────────────────────────────────────
+User Action → ReaderWindow.displayPage(pageNum)
+              ↓
+              ReadPageUseCase.execute(pageNum)
+              ↓
+              BookReaderRepository.getPage(pageNum)
+              ↓
+              MultiFormatBookReaderRepository delegates to:
+              - PdfReader (for PDF)
+              - EpubBookReader (for EPUB)
+              - TxtReader (for TXT/MOBI)
+              ↓
+              BookContent returned
+              ↓
+              Content displayed in UI ✓
+
+
+SAVE PROGRESS FLOW:
+─────────────────────────────────────────────────────────────────────────
+ReaderWindow.updateProgress()
+              ↓
+              UpdateReadingProgressUseCase.execute(bookId, page, total)
+              ↓
+              ReadingProgress entity created/updated
+              ↓
+              ReadingProgressRepository.save(progress)
+              ↓
+              JsonReadingProgressRepository saves to data/reading_progress.json
+              ↓
+              Progress saved ✓
+
+
+════════════════════════════════════════════════════════════════════════
+                           KEY PRINCIPLES
+════════════════════════════════════════════════════════════════════════
+
+1. DEPENDENCY RULE
+   ───────────────
+   Dependencies point INWARD:
+   Framework → Adapters → Use Cases → Domain
+   
+   Domain has ZERO dependencies!
+
+2. SINGLE RESPONSIBILITY
+   ─────────────────────
+   Each class has ONE reason to change:
+   - Book: Represents a book entity
+   - BookRepository: Manages book persistence
+   - AddBookUseCase: Adds a book to library
+   - MainWindow: Displays the UI
+
+3. OPEN/CLOSED PRINCIPLE
+   ─────────────────────
+   Open for extension, closed for modification:
+   - New format? Add new FormatReader
+   - New storage? Add new Repository impl
+   - Use Cases remain unchanged!
+
+4. DEPENDENCY INVERSION
+   ────────────────────
+   Depend on abstractions, not concretions:
+   - Use Cases depend on Repository INTERFACES
+   - Framework provides concrete implementations
+   - Easy to swap implementations
+
+5. INTERFACE SEGREGATION
+   ─────────────────────
+   Specific, focused interfaces:
+   - BookRepository: Book operations only
+   - BookReaderRepository: Reading operations only
+   - BookmarkRepository: Bookmark operations only
+
+
+════════════════════════════════════════════════════════════════════════
+                          TESTING STRATEGY
+════════════════════════════════════════════════════════════════════════
+
+UNIT TESTS (Domain Layer):
+   Test entities in isolation
+   No dependencies, pure logic
+   
+   Example: Book.equals(), BookFormat.fromExtension()
+
+USE CASE TESTS:
+   Mock repositories
+   Test business logic
+   
+   Example: AddBookUseCase with mock BookRepository
+
+INTEGRATION TESTS (Adapters):
+   Test actual file I/O
+   Test format readers with real files
+   
+   Example: PdfReader with sample PDF
+
+UI TESTS (Framework):
+   Manual testing or UI automation
+   Test user interactions
+   
+   Example: Click "Add Book" button
+
+
+════════════════════════════════════════════════════════════════════════
+                        EXTENSIBILITY POINTS
+════════════════════════════════════════════════════════════════════════
+
+TO ADD NEW BOOK FORMAT (e.g., CBZ comics):
+   1. Add CBZ to BookFormat enum
+   2. Create CbzReader implements FormatReader
+   3. Register in MultiFormatBookReaderRepository
+   4. Done! No changes to Use Cases or Domain!
+
+TO CHANGE STORAGE (e.g., SQLite):
+   1. Create SqliteBookRepository implements BookRepository
+   2. Update Main.java dependency injection
+   3. Done! Use Cases work unchanged!
+
+TO ADD NEW FEATURE (e.g., Reading Statistics):
+   1. Create ReadingStatistics entity (Domain)
+   2. Create ReadingStatisticsRepository interface (Domain)
+   3. Create GetStatisticsUseCase (Use Cases)
+   4. Implement repository (Adapters)
+   5. Add UI components (Framework)
+   Clean architecture in action!
+
+
+════════════════════════════════════════════════════════════════════════
+ReadCore - Clean, Simple, Offline Digital Book Reader
+Built with Clean Architecture Principles
+════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,127 @@
+Welcome to ReadCore
+===================
+
+This is a sample text book to demonstrate the ReadCore digital book reader.
+
+Chapter 1: Introduction
+-----------------------
+
+ReadCore is a digital book reader application built with Clean Architecture principles.
+It supports multiple formats including PDF, EPUB, TXT, and MOBI files.
+
+The application is designed to work completely offline, storing all your books,
+bookmarks, and reading progress locally on your computer.
+
+Key Features:
+- Multi-format support (PDF, EPUB, TXT, MOBI)
+- Offline reading
+- Automatic progress saving
+- Bookmark management
+- Clean, intuitive interface
+- Font size adjustment
+- Search functionality
+
+
+Chapter 2: Getting Started
+--------------------------
+
+To add a book to your library:
+1. Click the "Add Book" button
+2. Select a book file from your computer
+3. The book will appear in your library
+
+To read a book:
+1. Double-click on a book in the library
+2. Or select a book and click "Open Book"
+3. Use the navigation controls to move between pages
+
+
+Chapter 3: Features
+------------------
+
+Reading Progress:
+Your position in each book is automatically saved when you navigate pages.
+When you reopen a book, it will automatically jump to where you left off.
+
+Bookmarks:
+- Add a bookmark on any page
+- Optionally add a note to remember why you bookmarked it
+- View all bookmarks and jump to them quickly
+
+Search:
+Use the search field in the library to find books by title or author.
+
+
+Chapter 4: Navigation
+--------------------
+
+You can navigate through books using:
+- Previous/Next buttons
+- Page slider at the bottom
+- "Go to Page" menu option (Navigation → Go to Page)
+- Bookmarks list (double-click to jump to a bookmarked page)
+
+
+Chapter 5: Customization
+-----------------------
+
+Font Size:
+Adjust the reading font size using:
+- View → Increase Font Size
+- View → Decrease Font Size
+
+This helps make reading more comfortable for your eyes.
+
+
+Chapter 6: Architecture
+----------------------
+
+ReadCore is built using Clean Architecture with four distinct layers:
+
+1. Domain Layer - Core business entities and rules
+2. Use Cases Layer - Application-specific business rules
+3. Adapters Layer - Interface adapters (repositories, readers)
+4. Framework Layer - UI and external frameworks
+
+This architecture ensures:
+- Testability
+- Maintainability
+- Independence from frameworks
+- Clear separation of concerns
+
+
+Chapter 7: Technical Details
+---------------------------
+
+The application uses:
+- Java 11+ for the core implementation
+- Apache PDFBox for PDF support
+- EPUBLib for EPUB files
+- Gson for JSON data storage
+- Java Swing for the user interface
+
+All data is stored locally in JSON format in the "data" folder.
+
+
+Chapter 8: Offline First
+-----------------------
+
+ReadCore is designed to work completely offline:
+- No internet connection required
+- All books stored locally
+- All data (progress, bookmarks) saved locally
+- Fast, responsive reading experience
+
+
+Conclusion
+----------
+
+Thank you for using ReadCore!
+
+We hope you enjoy reading your digital books with our clean,
+simple, and efficient reader.
+
+Happy reading!
+
+---
+ReadCore v1.0
